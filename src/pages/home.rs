@@ -57,12 +57,12 @@ pub fn Home() -> impl IntoView {
             }.into_any(),
             "ios" => view! {
                 <div class="ios-shots">
-                    <img class="ios-shot" src="/demo/chat.png" alt="" />
-                    <img class="ios-shot" src="/demo/settings.png" alt="" />
+                    <img class="ios-shot" src="demo/chat.png" alt="" />
+                    <img class="ios-shot" src="demo/settings.png" alt="" />
                 </div>
             }.into_any(),
             name => {
-                let src = format!("/demo/{name}.mp4");
+                let src = format!("demo/{name}.mp4");
                 view! { <video class="clip" src=src controls autoplay loop playsinline></video> }.into_any()
             }
         }}
