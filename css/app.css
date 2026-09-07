@@ -1,0 +1,563 @@
+@import "tailwindcss";
+@source "../src/**/*.rs";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --color-ink: #111111;
+  --color-paper: #ffffff;
+  --color-page: #ffffff;
+  --color-mute: #737373;
+  --color-well: #f3f3f3;
+  --color-line: rgba(17, 17, 17, 0.1);
+  --color-ok: #1f7a4c;
+  --color-bad: #b42318;
+}
+
+@layer base {
+  [data-theme="dark"] {
+    --color-ink: #ffffff;
+    --color-paper: #111111;
+    --color-page: #111111;
+    --color-mute: #a3a3a3;
+    --color-well: #1a1a1a;
+    --color-line: rgba(255, 255, 255, 0.12);
+    --color-ok: #5aa37a;
+    --color-bad: #e07a72;
+  }
+  html {
+    color-scheme: light;
+  }
+  html[data-theme="dark"] {
+    color-scheme: dark;
+  }
+  html,
+  body {
+    @apply m-0 min-h-full bg-page font-sans text-base/[1.5] font-normal text-ink antialiased;
+  }
+  a {
+    @apply text-ink underline decoration-line underline-offset-[3px];
+  }
+  button {
+    font: inherit;
+  }
+  ::selection {
+    @apply bg-ink text-paper;
+  }
+}
+
+@layer components {
+  .mark {
+    @apply block size-[18px] shrink-0 text-ink;
+  }
+  .mark.big {
+    @apply size-8;
+  }
+  .shell {
+    @apply flex min-h-dvh min-w-0 flex-col;
+  }
+  .top {
+    @apply sticky top-0 z-2 flex min-h-14 items-center gap-4 bg-page px-6 py-4;
+  }
+  .brand {
+    @apply flex shrink-0 items-center gap-3 text-lg font-semibold tracking-tight text-ink no-underline;
+  }
+  .top-nav {
+    @apply ml-auto flex min-w-0 items-center gap-6;
+  }
+  .top-link {
+    @apply inline-flex items-center whitespace-nowrap text-[15px] font-medium text-ink no-underline hover:opacity-70;
+  }
+  .wrap {
+    @apply mx-auto w-full max-w-[1080px] flex-1 px-6 pb-24 pt-2;
+  }
+  .hero {
+    @apply relative mt-0 grid min-h-[min(72dvh,44rem)] gap-0;
+  }
+  .hero-cover {
+    @apply pointer-events-none absolute inset-0 z-4 grid place-items-center bg-page px-6;
+  }
+  .hero-cover h1 {
+    @apply m-0 max-w-[18ch] text-center text-[clamp(2.75rem,9vw,5.5rem)] font-semibold leading-[1.05] tracking-[-0.05em] text-ink;
+  }
+  .hero .demo {
+    @apply flex min-h-[28rem] min-w-0 flex-1 flex-col overflow-hidden;
+  }
+  .demo-body {
+    @apply grid min-h-0 min-w-0 flex-1 overflow-hidden md:grid-cols-[180px_minmax(0,1fr)];
+  }
+  .demo .thread {
+    @apply m-0 min-h-0 min-w-0 overflow-x-hidden overflow-y-auto rounded-none bg-page px-5 py-5;
+  }
+  .page-hero h1 {
+    @apply mb-4 mt-0 text-[2.25rem] font-semibold tracking-[-0.04em] text-ink md:text-[2.75rem] md:leading-[1.08];
+  }
+  .kicker {
+    @apply mb-3 mt-0 text-sm font-medium text-mute;
+  }
+  .lede {
+    @apply mb-8 mt-0 max-w-[34em] text-lg/[1.5] text-mute;
+  }
+  .section-lead {
+    @apply mb-7 mt-0 max-w-[40em] text-base text-mute;
+  }
+  section {
+    @apply mt-20;
+  }
+  h2 {
+    @apply mb-2.5 mt-0 text-sm font-medium text-mute;
+  }
+  a.btn,
+  button.btn,
+  a.ghost,
+  button.ghost {
+    @apply inline-flex cursor-pointer items-center justify-center rounded-full border-0 bg-well px-3.5 py-2 text-sm font-medium text-ink no-underline;
+  }
+  a.ghost:hover,
+  button.ghost:hover {
+    @apply bg-black/[0.08] dark:bg-white/10;
+  }
+  a.btn-ink,
+  button.btn-ink,
+  a.primary {
+    @apply inline-flex cursor-pointer items-center justify-center rounded-full border-0 bg-ink px-4 py-2.5 text-[15px] font-semibold text-paper no-underline hover:bg-black dark:hover:bg-white dark:hover:text-black;
+  }
+  .actions {
+    @apply mt-2 mb-10 flex flex-wrap gap-3;
+  }
+  .trio {
+    @apply mt-10 mb-8 grid list-none gap-px overflow-hidden rounded-2xl bg-line p-0 sm:grid-cols-3;
+  }
+  .trio li {
+    @apply bg-page px-0 py-4 sm:px-4 sm:py-5;
+  }
+  .trio .step-n {
+    @apply mb-2 font-mono text-[11px] tracking-[0.16em] text-mute uppercase;
+  }
+  .trio b {
+    @apply mb-1 block text-[15px] font-semibold tracking-tight;
+  }
+  .trio span {
+    @apply block text-[13px]/[1.45] text-mute;
+  }
+  .trio li.on .step-n {
+    @apply text-ok;
+  }
+  .demo-bar {
+    @apply mb-3 flex flex-wrap items-center gap-2;
+  }
+  .demo.off {
+    @apply pointer-events-none opacity-40;
+  }
+  .demo-chrome {
+    @apply flex flex-wrap items-center gap-2 border-b border-line px-3 py-2.5 sm:px-4;
+  }
+  .demo-acts {
+    @apply ml-auto flex items-center gap-1.5;
+  }
+  button.tiny,
+  a.tiny {
+    @apply px-3 py-1.5 text-[13px];
+  }
+  .demo-chrome .mark {
+    @apply size-3.5;
+  }
+  .demo-title {
+    @apply font-mono text-[12px] tracking-tight text-mute;
+  }
+  .demo-status {
+    @apply ml-auto font-mono text-[11px] tracking-[0.08em] text-mute uppercase;
+  }
+  .demo-status.on {
+    @apply text-ok;
+  }
+  .demo-body {
+    @apply grid min-h-0 min-w-0 flex-1 overflow-hidden md:grid-cols-[180px_minmax(0,1fr)];
+  }
+  .file-rail {
+    @apply flex min-h-0 min-w-0 flex-col overflow-hidden border-r border-line bg-page px-3 py-4;
+  }
+  .file-rail h4 {
+    @apply m-0 mb-2 font-mono text-[10px] tracking-[0.14em] text-mute uppercase;
+  }
+  .file-list {
+    @apply min-h-0 flex-1 overflow-auto;
+  }
+  .file-chip {
+    @apply mb-1 truncate rounded-lg px-2 py-1.5 font-mono text-[12px] text-ink;
+  }
+  .file-zip {
+    @apply mt-3 w-full;
+  }
+  .demo .empty {
+    @apply m-auto max-w-[18ch] py-10 text-center text-[clamp(2rem,6vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.04em] text-ink;
+  }
+  .demo .bubble {
+    @apply box-border max-w-full;
+  }
+  .demo .bubble.me {
+    @apply max-w-[min(78%,100%)];
+  }
+  .demo .composer {
+    @apply m-0 flex max-w-none items-end gap-2 border-t border-line bg-well px-3 py-3;
+  }
+  .demo .composer-box {
+    @apply flex-1 rounded-2xl bg-page;
+  }
+  .demo textarea {
+    @apply min-h-12 w-full resize-none bg-transparent px-3.5 py-3 font-sans text-[15px] text-ink outline-none;
+  }
+  button:disabled {
+    @apply cursor-wait opacity-50;
+  }
+  .bubble.note {
+    @apply max-w-none self-stretch bg-transparent px-0 py-1 text-sm text-mute;
+  }
+  .inline-login {
+    @apply border-b border-line bg-well px-5 py-5;
+  }
+  .flash {
+    @apply m-0 border-b border-line px-5 py-2.5 text-sm text-mute;
+  }
+  .inline-login h3 {
+    @apply mb-2 mt-0 text-xl font-semibold tracking-tight;
+  }
+  .files {
+    @apply mt-3 whitespace-pre-wrap font-mono text-xs;
+  }
+  .user-code {
+    @apply my-3 font-mono text-[22px] tracking-wide text-ok;
+  }
+  .terminal {
+    @apply overflow-hidden rounded-[22px] bg-well;
+  }
+  .term-bar {
+    @apply flex items-center gap-2.5 px-5 py-3.5 font-mono text-xs text-mute;
+  }
+  .term-bar .mark-dot {
+    @apply size-2 rounded-full bg-ink;
+  }
+  .term-body {
+    @apply grid gap-2 px-5 pb-6 pt-1 font-mono text-[13px]/[1.65];
+  }
+  .prompt {
+    @apply text-mute;
+  }
+  .dim {
+    @apply text-mute;
+  }
+  .user {
+    @apply text-ink;
+  }
+  .think {
+    @apply text-mute;
+  }
+  .ok {
+    @apply text-ok;
+  }
+  .cursor {
+    @apply ml-0.5 inline-block h-3.5 w-1.5 align-[-2px] bg-ink;
+    animation: blink 1.1s steps(1) infinite;
+  }
+  .plats {
+    @apply mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-y border-line py-4;
+  }
+  .page-plats {
+    @apply mt-0;
+  }
+  a.plat,
+  button.plat {
+    @apply inline-flex w-auto items-center justify-center rounded-none bg-transparent px-0 py-1 text-ink no-underline hover:opacity-60;
+  }
+  button.plat.on {
+    @apply underline decoration-ink underline-offset-4;
+  }
+  a.plat b,
+  button.plat b {
+    @apply text-[14px] font-medium tracking-tight;
+  }
+  .ios-shots {
+    @apply mt-4 grid justify-center gap-4 sm:grid-cols-2;
+  }
+  .ios-shot {
+    @apply mx-auto w-full max-w-[280px] overflow-hidden rounded-[28px] border border-line;
+  }
+  .shots {
+    @apply mt-10 grid gap-6 md:grid-cols-2;
+  }
+  .shot {
+    @apply grid grid-rows-[auto_1fr] gap-0 overflow-hidden rounded-2xl border border-line bg-page;
+  }
+  .shots .tui {
+    @apply m-0 flex min-h-[20rem] flex-col border-0;
+    background: #1b1e28;
+    color: #e2e6f1;
+  }
+  .shot-tip {
+    @apply m-0 flex flex-col gap-0.5 bg-well px-4 py-3 text-ink;
+  }
+  .shot-tip b {
+    @apply font-mono text-[11px] font-medium tracking-[0.12em] uppercase;
+  }
+  .shot-tip span {
+    @apply text-[13px] font-normal text-mute;
+  }
+  .tui {
+    @apply overflow-hidden font-mono text-[13px]/[1.5];
+  }
+  .tui-thread {
+    @apply flex min-h-0 flex-1 flex-col gap-1 px-3 py-3;
+  }
+  .shots .tui .bubble {
+    @apply max-w-none rounded-none bg-transparent px-0 py-0;
+  }
+  .shots .tui .bubble.me {
+    @apply self-stretch;
+    color: #f7a878;
+  }
+  .shots .tui .bubble.ai {
+    @apply self-stretch;
+    color: #c4a7f7;
+  }
+  .shots .tui .tool-run {
+    color: #9ece6a;
+  }
+  .tui-tools-sum {
+    @apply py-1;
+    color: #7a829a;
+  }
+  .tui-chip {
+    @apply inline-flex px-1;
+    color: #e2e6f1;
+    background: #2a4056;
+  }
+  .shots .tui .bubble.streaming::after {
+    background: #c4a7f7;
+  }
+  .tui-think {
+    @apply mx-2 mb-2 rounded-none px-3 py-2;
+    border: 1px solid #9a82c4;
+    color: #948ca8;
+  }
+  .tui-label {
+    @apply mb-1 text-[10px] tracking-[0.16em] uppercase;
+    color: #7dcfef;
+  }
+  .tui-think .tui-label {
+    color: #9a82c4;
+  }
+  .tui-think-body {
+    color: #948ca8;
+  }
+  .tui-interrupt {
+    @apply mx-2 mb-2 rounded-none px-3 py-1.5;
+    background: #2a2f3d;
+    color: #e2e6f1;
+  }
+  .tui-int-label {
+    color: #f38ba8;
+  }
+  .tui-status .tui-spin {
+    color: #e8c468;
+  }
+  .tui-box {
+    @apply mx-2 mb-2 rounded-none px-3 py-2;
+    border: 1px solid #7a829a;
+  }
+  .tui-steer {
+    border-color: #7dcfef;
+  }
+  .tui-steer .tui-label {
+    color: #7dcfef;
+  }
+  .tui-queue {
+    background: transparent;
+    border-color: #7a829a;
+  }
+  .tui-line {
+    color: #e2e6f1;
+  }
+  .tui-qrow {
+    @apply flex items-baseline justify-between gap-3 py-0.5;
+    color: #e2e6f1;
+  }
+  .tui-qnum {
+    color: #7a829a;
+  }
+  .tui-ctrls {
+    @apply shrink-0 text-[11px];
+    color: #7a829a;
+  }
+  .tui-ctrls .steer {
+    color: #7dcfef;
+  }
+  .tui-ctrls .edit {
+    color: #f7a878;
+  }
+  .tui-ctrls .move {
+    color: #e8c468;
+  }
+  .tui-ctrls .move.off {
+    color: #7a829a;
+  }
+  .tui-ctrls .drop {
+    color: #f38ba8;
+  }
+  .tui-composer {
+    @apply mx-2 mb-2 flex items-center gap-2 rounded-none px-3 py-2;
+    border: 1px solid #34436e;
+    color: #e2e6f1;
+  }
+  .tui-prompt {
+    color: #7a829a;
+  }
+  .shots .tui .cursor {
+    background: #e2e6f1;
+  }
+  .tui-status {
+    @apply flex flex-wrap items-baseline gap-x-3 gap-y-0.5 border-0 px-3 py-1.5 text-[11px] tracking-wide;
+    color: #7a829a;
+  }
+  .tui-status .tui-right {
+    @apply ml-auto flex flex-wrap gap-x-3;
+  }
+  .tui-status .tui-ws {
+    color: #7dcfef;
+  }
+  .tui-status .ok {
+    color: #9ece6a;
+  }
+  .tui-status .tui-reason {
+    color: #c4a7f7;
+  }
+  .tui-status .tui-cache {
+    color: #e8c468;
+  }
+  .tui-status .tui-cost {
+    color: #f7a878;
+  }
+  .tui-status .tui-model {
+    color: #c4a7f7;
+  }
+  .quote {
+    @apply mt-20 rounded-[22px] bg-well px-7 py-8;
+  }
+  .quote p {
+    @apply mb-2 mt-0 text-xl font-semibold tracking-tight;
+  }
+  .quote span {
+    @apply text-sm text-mute;
+  }
+  footer {
+    @apply mx-auto flex w-full max-w-[1080px] flex-wrap justify-between gap-4 px-6 pb-12 pt-10 text-sm text-mute;
+  }
+  footer a {
+    @apply text-ink no-underline hover:underline;
+  }
+  .page-hero {
+    @apply pb-2;
+  }
+  .install-grid {
+    @apply mt-8 grid gap-8;
+  }
+  .copy-row {
+    @apply mb-2 flex justify-between text-sm text-mute;
+  }
+  .install-pane .code {
+    @apply mt-4;
+  }
+  .install-pane .paths {
+    @apply mt-4;
+  }
+  .paths {
+    @apply mt-8 m-0 list-none p-0 font-mono text-[13px];
+  }
+  .paths li {
+    @apply border-b border-line py-3.5 text-ink;
+  }
+  .paths li span {
+    @apply mr-4 inline-block w-[6.5em] text-mute;
+  }
+  .paths li:last-child {
+    @apply border-b-0;
+  }
+  .session-demo {
+    @apply mt-0 grid gap-8 md:grid-cols-[200px_1fr];
+  }
+  .sidebar h4 {
+    @apply mb-2 mt-0 text-sm font-medium text-mute;
+  }
+  .sess {
+    @apply cursor-pointer rounded-2xl px-3.5 py-3;
+  }
+  .sess:hover {
+    @apply bg-black/[0.04] dark:hover:bg-white/[0.06];
+  }
+  .sess.active {
+    @apply bg-well;
+  }
+  .sess .t {
+    @apply text-[15px] font-semibold tracking-tight;
+  }
+  .sess .m {
+    @apply text-[13px] text-mute;
+  }
+  .thread {
+    @apply flex min-h-[16rem] min-w-0 flex-col gap-3.5 rounded-[22px] bg-well px-5 py-5;
+  }
+  .bubble {
+    @apply box-border max-w-[78%] whitespace-pre-wrap break-words rounded-2xl px-4 py-3 text-[15px]/[1.5];
+  }
+  .bubble.me {
+    @apply self-end bg-page;
+  }
+  .bubble.ai {
+    @apply max-w-full self-start bg-transparent px-0 py-1;
+  }
+  .tool-run {
+    @apply self-stretch py-1 font-mono text-[13px] text-mute;
+  }
+  .not-found {
+    @apply pt-[8vh];
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .top {
+    @apply h-auto flex-wrap px-[18px] py-3;
+  }
+  .top-nav {
+    @apply ml-0 w-full justify-end gap-[18px];
+  }
+  .wrap {
+    @apply px-4 pb-16 pt-4;
+  }
+  .file-rail {
+    @apply border-b border-line px-3 py-3 md:border-b-0 md:border-r;
+  }
+  .hero {
+    @apply min-h-0;
+  }
+  .demo-body {
+    @apply grid-cols-1;
+  }
+  footer {
+    @apply px-5;
+  }
+  .page h1,
+  .hero h1,
+  .page-hero h1 {
+    @apply text-[2rem] leading-[1.15];
+  }
+  .quote {
+    @apply px-5 py-6;
+  }
+}

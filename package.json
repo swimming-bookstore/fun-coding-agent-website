@@ -1,0 +1,13 @@
+{
+  "name": "fun-coding-agent-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "css": "mkdir -p public && tailwindcss -i css/app.css -o public/style.css",
+    "css:watch": "mkdir -p public && tailwindcss -i css/app.css -o public/style.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.12",
+    "tailwindcss": "^4.1.12"
+  }
+}

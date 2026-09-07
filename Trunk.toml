@@ -1,0 +1,24 @@
+[build]
+target = "index.html"
+dist = "dist"
+public_url = "/"
+
+[watch]
+ignore = ["dist", "public/style.css"]
+
+[serve]
+port = 8080
+open = false
+
+[[hooks]]
+stage = "pre_build"
+command = "npm"
+command_arguments = ["run", "css"]
+
+[[proxy]]
+rewrite = "/xai-auth/"
+backend = "https://auth.x.ai/"
+
+[[proxy]]
+rewrite = "/xai-api/"
+backend = "https://api.x.ai/"

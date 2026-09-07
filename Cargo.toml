@@ -1,0 +1,39 @@
+[package]
+name = "fun-coding-agent-website"
+version = "0.1.0"
+edition = "2021"
+description = "Marketing site for Fun coding agent"
+license = "MIT"
+
+[dependencies]
+console_error_panic_hook = "0.1"
+gloo-net = "0.6"
+gloo-timers = { version = "0.3", features = ["futures"] }
+js-sys = "0.3"
+leptos = { version = "0.8", features = ["csr"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+wasm-bindgen = "0.2"
+web-sys = { version = "0.3", features = [
+  "Window",
+  "Storage",
+  "Document",
+  "Element",
+  "HtmlElement",
+  "HtmlAnchorElement",
+  "HtmlTextAreaElement",
+  "HtmlFormElement",
+  "Blob",
+  "BlobPropertyBag",
+  "Url",
+  "EventTarget",
+] }
+zip = { version = "2", default-features = false, features = ["deflate"] }
+rustpython-vm = { version = "0.4", default-features = false, features = ["compiler"] }
+getrandom = { version = "0.3", features = ["wasm_js"] }
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
