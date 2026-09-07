@@ -67,7 +67,7 @@ fn App() -> impl IntoView {
 fn Nav(theme: RwSignal<String>) -> impl IntoView {
     view! {
         <nav class="top">
-            <a href="/" class="brand">
+            <a href="./" class="brand">
                 <Mark/>
                 <span>"fun coding agent"</span>
             </a>
